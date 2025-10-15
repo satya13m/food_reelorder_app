@@ -1,6 +1,6 @@
 const userModel = require('../models/user.model');
 const jwt = require('jsonwebtoken');
-const brcypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const foodPartnerModel = require('../models/foodPartner.model');
 
 async function registerUser(req, res) {
@@ -13,7 +13,7 @@ async function registerUser(req, res) {
     }
 
     //if not existed
-    const hashedPassword = await brcypt.hash(password,10);
+    const hashedPassword = await bcrypt.hash(password,10);
 
     //cerate new user
     const user = await userModel.create({
@@ -44,7 +44,7 @@ async function loginUser(req, res) {
         return res.status(400).json({message:"Invalid email or password"});
     }
 
-    const isValidPassword = await brcypt.compare(password,user.password);
+    const isValidPassword = await bcrypt.compare(password,user.password);
 
     if(!isValidPassword){
         return res.status(400).json({message:"Invalid credentials"});
