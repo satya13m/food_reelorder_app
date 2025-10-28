@@ -14,8 +14,9 @@ router.post("/",
     upload.single("video"), 
     foodController.createFood);
 
-router.get("/", (req, res) => {
-    res.send("Food route is working");
-});
+router.get("/", 
+    authMiddleware.authUserMiddleware, 
+    foodController.getFoodItems);   
+
 
 module.exports = router;
